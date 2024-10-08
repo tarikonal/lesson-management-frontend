@@ -1,0 +1,91 @@
+<div class="card">
+    <span class="text-900 text-xl font-bold mb-4 block">Özel Ders</span>
+    <div class="grid">
+        <div class="col-12 lg:col-2">
+
+            <p class="m-0 p-0 text-600 line-height-3 mr-3">Verilen Özel Ders Detaylarını buradan giriniz. Doğru hesaplama için dersin tarihini zaman aralığını doğru olarak girilmesi önemlidir</p>
+        </div>
+        <div class="col-12 lg:col-10">
+
+            <form #sessionSaveForm="ngForm">
+                <div class="grid formgrid p-fluid">
+                    <div class="field mb-1 col-12">
+                        <label for="hourlyPrice" class="font-medium text-900">Saatlik Ücret</label>
+                        <input id="hourlyPrice" name="hourlyPrice" type="text" pInputText [(ngModel)]="sessionSaveModel.hourlyPrice" required>
+                    </div>
+                    <span>diğer alanları da ekle</span>
+                    <div class="field mb-4 col-12 flex justify-content-end flex-wrap">
+                        <button id="btnKaydet" name="btnKaydet" pButton pRipple label="Kaydet" (click)="ekle()" class="w-auto mt-3" [disabled]="sessionSaveForm.form.invalid"></button>
+                    </div>
+
+
+                </div>
+            </form>
+
+            <div class="grid formgrid p-fluid mt-5">
+                <div class="field mb-4 col-12">
+                    <p-table responsiveLayout="scroll" #dt [value]="sessionList" [rows]="8" [paginator]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+<!--                                <th pSortableColumn="id" style="width:80%" class="white-space-nowrap">ID-->
+<!--                                    <p-sortIcon field="id"></p-sortIcon>-->
+                                <th pSortableColumn="hourlyPrice" style="width:80%" class="white-space-nowrap">HourlyPrice
+                                    <p-sortIcon field="hourlyPrice"></p-sortIcon>
+                                <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
+                                    <p-sortIcon field="ekleyen"></p-sortIcon>
+
+                                <th style="width:10%">Güncelle</th>
+                                <th style="width:10%">Sil</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-sessions>
+                            <tr>
+<!--                                <td>{{ amaclar.id }}</td>-->
+                                <td>{{ sessions.name }}</td>
+                                <td>{{ sessions.ekleyen }}</td>
+                                <td>
+                                    <button pButton class="p-button-warning w-auto" (click)="guncelleDialog(sessions)">
+                                        Güncelle
+                                    </button>
+                                </td>
+                                <td>
+                                    <button pButton class="p-button-danger w-auto" (click)="sil(sessions.id)">
+                                        Sil
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                            <div class="flex align-items-center justify-content-between">
+                                Toplamda {{sessionList ? sessionList.length : 0 }} tane özel ders kaydı var.
+                            </div>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-dialog [(visible)]="showGuncelleDialog" [style]="{width: '60rem'}" [modal]="true" header="Özel Ders Güncelle">
+
+    <div class="col-12 md:col-12">
+        <form #sessionUpdateForm="ngForm">
+            <div class="p-fluid p-formgrid grid">
+
+
+                <div class="field mb-1 col-12">
+                    <label for="cloneHourlyPrice" class="font-medium text-900">Açıklama</label>
+                    <input id="cloneHourlyPrice" name="cloneHourlyPrice" type="text" pInputText [(ngModel)]="sessionUpdateModel.hourlyPrice" required>
+                </div>
+                <span>diğer alanları da ekle</span>
+                <div class="field mb-4 col-12  flex justify-content-end flex-wrap">
+                    <button pButton pRipple label="Kaydet" class="w-auto mt-3" (click)="guncelle()" [disabled]="sessionUpdateForm.invalid"></button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+
+</p-dialog>

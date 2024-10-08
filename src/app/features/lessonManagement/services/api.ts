@@ -1,0 +1,13 @@
+export * from './account.service';
+import { AccountService } from './account.service';
+export * from './family.service';
+import { FamilyService } from './family.service';
+export * from './lesson.service';
+import { LessonService } from './lesson.service';
+export * from './session.service';
+import { SessionService } from './session.service';
+export * from './student.service';
+import { StudentService } from './student.service';
+export * from './teacher.service';
+import { TeacherService } from './teacher.service';
+export const APIS = [AccountService, FamilyService, LessonService, SessionService, StudentService, TeacherService];

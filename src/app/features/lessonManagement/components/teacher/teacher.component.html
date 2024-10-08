@@ -1,0 +1,95 @@
+<div class="card">
+    <span class="text-900 text-xl font-bold mb-4 block">Öğretmen</span>
+    <div class="grid">
+        <div class="col-12 lg:col-2">
+
+            <p class="m-0 p-0 text-600 line-height-3 mr-3">Öğretmenseniz kendinizi kaydediniz. Aile iseniz ders aldırdığınız öğretmenleri teker teker buradan girebilirsiniz. </p>
+        </div>
+        <div class="col-12 lg:col-10">
+
+            <form #teacherSaveForm="ngForm">
+                <div class="grid formgrid p-fluid">
+                    <div class="field mb-1 col-12">
+                        <label for="name" class="font-medium text-900">İsim</label>
+                        <input id="name" name="name" type="text" pInputText [(ngModel)]="teacherSaveModel.name" required>
+                    </div>
+                    <span>diğerleri eklenecek</span>
+                    <div class="field mb-4 col-12 flex justify-content-end flex-wrap">
+                        <button id="btnKaydet" name="btnKaydet" pButton pRipple label="Kaydet" (click)="ekle()" class="w-auto mt-3" [disabled]="teacherSaveForm.form.invalid"></button>
+                    </div>
+
+
+                </div>
+            </form>
+
+            <div class="grid formgrid p-fluid mt-5">
+                <div class="field mb-4 col-12">
+                    <p-table responsiveLayout="scroll" #dt [value]="teacherList" [rows]="8" [paginator]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+<!--                                <th pSortableColumn="id" style="width:80%" class="white-space-nowrap">ID-->
+<!--                                    <p-sortIcon field="id"></p-sortIcon>-->
+                                <th pSortableColumn="name" style="width:80%" class="white-space-nowrap">İsim
+                                    <p-sortIcon field="name"></p-sortIcon>
+                                <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
+                                    <p-sortIcon field="ekleyen"></p-sortIcon>
+
+                                <th style="width:10%">Güncelle</th>
+                                <th style="width:10%">Sil</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-teachers>
+                            <tr>
+<!--                                <td>{{ amaclar.id }}</td>-->
+                                <td>{{ teachers.name }}</td>
+                                <td>{{ teachers.ekleyen }}</td>
+                                <td>
+                                    <button pButton class="p-button-warning w-auto" (click)="guncelleDialog(teachers)">
+                                        Güncelle
+                                    </button>
+                                </td>
+                                <td>
+                                    <button pButton class="p-button-danger w-auto" (click)="sil(teachers.id)">
+                                        Sil
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                            <div class="flex align-items-center justify-content-between">
+                                Toplamda {{teacherList ? teacherList.length : 0 }} tane öğretmen var.
+                            </div>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-dialog [(visible)]="showGuncelleDialog" [style]="{width: '60rem'}" [modal]="true" header="Öğretmen Güncelle">
+
+    <div class="col-12 md:col-12">
+        <form #teacherUpdateForm="ngForm">
+            <div class="p-fluid p-formgrid grid">
+
+
+                <div class="field mb-1 col-12">
+                    <label for="cloneName" class="font-medium text-900">İsim</label>
+                    <input id="cloneName" name="cloneName" type="text" pInputText [(ngModel)]="teacherUpdateForm.name" required>
+                </div>
+                <span>diğerlerini de ekle</span>
+                <div class="field mb-4 col-12  flex justify-content-end flex-wrap">
+                    <button pButton pRipple label="Kaydet" class="w-auto mt-3" (click)="guncelle()" [disabled]="teacherUpdateForm.invalid"></button>
+                </div>
+
+
+
+
+
+            </div>
+        </form>
+    </div>
+
+
+</p-dialog>

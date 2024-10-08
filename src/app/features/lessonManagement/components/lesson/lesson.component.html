@@ -1,0 +1,93 @@
+<div class="card">
+    <span class="text-900 text-xl font-bold mb-4 block">Dersler</span>
+    <div class="grid">
+        <div class="col-12 lg:col-2">
+
+            <p class="m-0 p-0 text-600 line-height-3 mr-3">Özel olarak alınan dersleri buradan girebilirsiniz. Öğretmen iseniz verdiğiniz ders çeşitlerini giriniz</p>
+        </div>
+        <div class="col-12 lg:col-10">
+
+            <form #lessonSaveForm="ngForm">
+                <div class="grid formgrid p-fluid">
+                    <div class="field mb-1 col-12">
+                        <label for="isim" class="font-medium text-900">İsim</label>
+                        <input id="isim" name="isim" type="text" pInputText [(ngModel)]="lessonSaveModel.name" required>
+                    </div>
+                    <div class="field mb-4 col-12 flex justify-content-end flex-wrap">
+                        <button id="btnKaydet" name="btnKaydet" pButton pRipple label="Kaydet" (click)="ekle()" class="w-auto mt-3" [disabled]="lessonSaveForm.form.invalid"></button>
+                    </div>
+
+
+                </div>
+            </form>
+
+            <div class="grid formgrid p-fluid mt-5">
+                <div class="field mb-4 col-12">
+                    <p-table responsiveLayout="scroll" #dt [value]="lessonList" [rows]="8" [paginator]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+<!--                                <th pSortableColumn="id" style="width:80%" class="white-space-nowrap">ID-->
+<!--                                    <p-sortIcon field="id"></p-sortIcon>-->
+                                <th pSortableColumn="name" style="width:80%" class="white-space-nowrap">İsim
+                                    <p-sortIcon field="name"></p-sortIcon>
+                                <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
+                                    <p-sortIcon field="ekleyen"></p-sortIcon>
+
+                                <th style="width:10%">Güncelle</th>
+                                <th style="width:10%">Sil</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-lessons>
+                            <tr>
+<!--                                <td>{{ amaclar.id }}</td>-->
+                                <td>{{ lessons.name }}</td>
+                                <td>{{ lessons.ekleyen }}</td>
+                                <td>
+                                    <button pButton class="p-button-warning w-auto" (click)="guncelleDialog(lessons)">
+                                        Güncelle
+                                    </button>
+                                </td>
+                                <td>
+                                    <button pButton class="p-button-danger w-auto" (click)="sil(lessons.id)">
+                                        Sil
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                            <div class="flex align-items-center justify-content-between">
+                                Toplamda {{lessonList ? lessonList.length : 0 }} tane ders var.
+                            </div>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-dialog [(visible)]="showGuncelleDialog" [style]="{width: '60rem'}" [modal]="true" header="Amaç Güncelle">
+
+    <div class="col-12 md:col-12">
+        <form #lessonUpdateForm="ngForm">
+            <div class="p-fluid p-formgrid grid">
+
+
+                <div class="field mb-1 col-12">
+                    <label for="cloneAciklama" class="font-medium text-900">Açıklama</label>
+                    <input id="cloneAciklama" name="cloneAciklama" type="text" pInputText [(ngModel)]="lessonUpdateModel.name" required>
+                </div>
+                <div class="field mb-4 col-12  flex justify-content-end flex-wrap">
+                    <button pButton pRipple label="Kaydet" class="w-auto mt-3" (click)="guncelle()" [disabled]="lessonUpdateForm.invalid"></button>
+                </div>
+
+
+
+
+
+            </div>
+        </form>
+    </div>
+
+
+</p-dialog>

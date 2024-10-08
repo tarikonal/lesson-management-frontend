@@ -1,0 +1,93 @@
+<div class="card">
+    <span class="text-900 text-xl font-bold mb-4 block">Aile</span>
+    <div class="grid">
+        <div class="col-12 lg:col-2">
+
+            <p class="m-0 p-0 text-600 line-height-3 mr-3">Aile soyadını buradan giriniz. Aile iseniz sadece kendi soyadınızı giriniz. Öğretmenler ders verdikleri ailelerin soyadlarını girmelidir. Öğrenci girişi yaparken hangi aileye mensup olduklarını Aile soyadı üzerinden eşleştireceksiniz</p>
+        </div>
+        <div class="col-12 lg:col-10">
+
+            <form #familySaveForm="ngForm">
+                <div class="grid formgrid p-fluid">
+                    <div class="field mb-1 col-12">
+                        <label for="name" class="font-medium text-900">Name</label>
+                        <input id="name" name="name" type="text" pInputText [(ngModel)]="familySaveModel.name" required>
+                    </div>
+                    <div class="field mb-4 col-12 flex justify-content-end flex-wrap">
+                        <button id="btnKaydet" name="btnKaydet" pButton pRipple label="Kaydet" (click)="ekle()" class="w-auto mt-3" [disabled]="familySaveForm.form.invalid"></button>
+                    </div>
+
+
+                </div>
+            </form>
+
+            <div class="grid formgrid p-fluid mt-5">
+                <div class="field mb-4 col-12">
+                    <p-table responsiveLayout="scroll" #dt [value]="familyList" [rows]="8" [paginator]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+<!--                                <th pSortableColumn="id" style="width:80%" class="white-space-nowrap">ID-->
+<!--                                    <p-sortIcon field="id"></p-sortIcon>-->
+                                <th pSortableColumn="aciklama" style="width:80%" class="white-space-nowrap">Açıklama
+                                    <p-sortIcon field="aciklama"></p-sortIcon>
+                                <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
+                                    <p-sortIcon field="ekleyen"></p-sortIcon>
+
+                                <th style="width:10%">Güncelle</th>
+                                <th style="width:10%">Sil</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-families>
+                            <tr>
+<!--                                <td>{{ amaclar.id }}</td>-->
+                                <td>{{ families.name }}</td>
+                                <td>{{ families.ekleyen }}</td>
+                                <td>
+                                    <button pButton class="p-button-warning w-auto" (click)="guncelleDialog(families)">
+                                        Güncelle
+                                    </button>
+                                </td>
+                                <td>
+                                    <button pButton class="p-button-danger w-auto" (click)="sil(families.id)">
+                                        Sil
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                            <div class="flex align-items-center justify-content-between">
+                                Toplamda {{familyList ? familyList.length : 0 }} tane aile var.
+                            </div>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-dialog [(visible)]="showGuncelleDialog" [style]="{width: '60rem'}" [modal]="true" header="Amaç Güncelle">
+
+    <div class="col-12 md:col-12">
+        <form #amacUpdateForm="ngForm">
+            <div class="p-fluid p-formgrid grid">
+
+
+                <div class="field mb-1 col-12">
+                    <label for="cloneIsim" class="font-medium text-900">İsim</label>
+                    <input id="cloneIsim" name="cloneIsim" type="text" pInputText [(ngModel)]="familyUpdateModel.name" required>
+                </div>
+                <div class="field mb-4 col-12  flex justify-content-end flex-wrap">
+                    <button pButton pRipple label="Kaydet" class="w-auto mt-3" (click)="guncelle()" [disabled]="amacUpdateForm.invalid"></button>
+                </div>
+
+
+
+
+
+            </div>
+        </form>
+    </div>
+
+
+</p-dialog>
