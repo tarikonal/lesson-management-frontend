@@ -45,12 +45,14 @@ export class FamilyComponent implements OnInit {
     }
 
     getFamilies() {
-        this.amacService.getAll().subscribe(
+        var userName = localStorage.getItem('currentUser');
+        this.amacService.getAllAsync().subscribe(
             (data) => {
                 this.familyList = data; //.body
             },
 
             (error) => {
+                console.log(error);
                 if (error.status === 401) {
                     // Display error message for 401 status code
                     console.log(
@@ -61,9 +63,9 @@ export class FamilyComponent implements OnInit {
                         summary: 'Hata',
                         detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
                     });
-                    sessionStorage.clear();
+                   // sessionStorage.clear();
                     window.location.href =
-                    'https://lessonManagement.tarikonal.com.tr';
+                    'http://localhost:4200/#';
                 } else {
                     // Handle other error cases
                     console.error('An error occurred:', error);
@@ -73,7 +75,7 @@ export class FamilyComponent implements OnInit {
     }
 
     ekle() {
-        this.amacService.add(this.familySaveModel).subscribe({
+        this.amacService.addAsync(this.familySaveModel).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
@@ -103,7 +105,7 @@ export class FamilyComponent implements OnInit {
     }
 
     guncelle() {
-        this.amacService.update(this.familyUpdateModel).subscribe({
+        this.amacService.updateAsync(this.familyUpdateModel).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
@@ -111,7 +113,9 @@ export class FamilyComponent implements OnInit {
                     detail: ' Güncellendi',
                 });
                 this.showGuncelleDialog = false;
+                this.getFamilies();
             },
+            
             error: (err) => {
                 this.messageService.add({
                     severity: 'error',
@@ -135,7 +139,7 @@ export class FamilyComponent implements OnInit {
             header: 'Silme İşlemi',
             icon: 'pi pi-info-circle',
             accept: () => {
-                this.amacService.delete(id).subscribe({
+                this.amacService.deleteAsync(id).subscribe({
                     next: () => {
                         this.messageService.add({
                             severity: 'success',

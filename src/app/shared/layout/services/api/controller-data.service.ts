@@ -49,6 +49,7 @@ export class ControllerDataService extends DataService {
     }
 
     addAsync(options?: any): Observable<any> {
+        console.log('AddAsync çalıştı:'+this._controllerName + 'AddAsync', options)
         return this.post(this._controllerName + 'AddAsync', options);
     }
 

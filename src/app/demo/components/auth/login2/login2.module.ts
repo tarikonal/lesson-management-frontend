@@ -6,7 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
-import { AppConfigModule } from 'src/app/layout/config/app.config.module';
+import { AppConfigModule } from 'src/app/shared/layout/components/config/app.config.module';
 import { RippleModule } from 'primeng/ripple';
 
 @NgModule({

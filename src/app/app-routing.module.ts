@@ -26,13 +26,21 @@ const routes: Routes = [
             //         import('./../app/features/dashboard/dashboard.module').then(
             //             (m) => m.DashboardModule
             //         ),
-            // },     
+            // }, 
+            {
+                path: 'dashboard',
+                data: { breadcrumb: 'Dashboard' },
+                loadChildren: () =>
+                    import('./../app/features/dashboard/dashboard.module').then(
+                        (m) => m.DashboardModule
+                    ),
+            },       
             {
                 path: '',
                 data: { breadcrumb: 'Lesson Management' },
                 loadChildren: () =>
-                    import('./../app/features/dashboard/dashboard.module').then(
-                        (m) => m.DashboardModule
+                    import('./demo/components/auth/login2/login2.module').then(
+                        (m) => m.Login2Module
                     ),
             },          
             {

@@ -15,6 +15,7 @@ const routes: Routes = [];
   imports: [RouterModule.forChild([
     { path: '', data: { breadcrumb: 'İstatistikler' }, component: DashboardComponent },
     { path: 'family', data: { breadcrumb: 'Aile' }, component: FamilyComponent },
+    { path: 'family', data: { breadcrumb: 'Aile' }, component: FamilyComponent },
     { path: 'teacher', data: { breadcrumb: 'Öğretmen' }, component: TeacherComponent },
     { path: 'account', data: { breadcrumb: 'Hesaplar' }, component: AccountComponent },
     { path: 'lesson', data: { breadcrumb: 'Dersler' }, component: LessonComponent },

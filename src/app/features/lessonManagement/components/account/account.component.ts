@@ -60,7 +60,7 @@ export class AccountComponent implements OnInit {
                         summary: 'Hata',
                         detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
                     });
-                    sessionStorage.clear();
+                    //sessionStorage.clear();
                     window.location.href =
                     'https://lessonManagement.tarikonal.com.tr';
                 } else {

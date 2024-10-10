@@ -51,11 +51,11 @@ export class AuthService implements OnDestroy {
             map((response: any) => {
                 console.log(response);
                 if (response) {
-                    sessionStorage.setItem(
+                    localStorage.setItem(
                         'currentUser',
                         JSON.stringify(response)
                     );
-                    sessionStorage.setItem('token', response.token);
+                    localStorage.setItem('token', response.token);
                 }
                 return response;
             }),
@@ -69,8 +69,8 @@ export class AuthService implements OnDestroy {
     }
 
     logout() {
-        sessionStorage.removeItem('currentUser');
-        sessionStorage.removeItem('token');
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('token');
 
         // this.router.navigate(['/auth/login'], {
         //     queryParams: {},
@@ -99,7 +99,7 @@ export class AuthService implements OnDestroy {
 
     private getAuthFromSessionStorage(): any | undefined {
         try {
-            const lsValue = sessionStorage.getItem('currentUser');
+            const lsValue = localStorage.getItem('currentUser');
             if (!lsValue) {
                 return undefined;
             }

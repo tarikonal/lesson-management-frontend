@@ -45,7 +45,7 @@ export class SessionComponent implements OnInit {
     }
 
     getSessions() {
-        this.sessionService.getAll().subscribe(
+        this.sessionService.getAllAsync().subscribe(
             (data) => {
                 this.sessionList = data; //.body
             },
@@ -61,7 +61,7 @@ export class SessionComponent implements OnInit {
                         summary: 'Hata',
                         detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
                     });
-                    sessionStorage.clear();
+                    //sessionStorage.clear();
                     window.location.href =
                     'https://lessonManagement.tarikonal.com.tr';
                 } else {

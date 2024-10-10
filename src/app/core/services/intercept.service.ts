@@ -57,120 +57,183 @@ export class InterceptService implements HttpInterceptor {
         );
     }
 
-    intercept(
-        req: HttpRequest<any>,
-        next: HttpHandler
-    ): Observable<HttpEvent<any>> {
-        console.log('intercept metodu çalıştı');
-        //console.log('intercept.serfvice=>Access Token alınmaya çalışılıyor=' +sessionStorage.getItem('accessToken'));
-        if (sessionStorage.getItem('accessToken') != null) {
-            console.log(
-                'intercept.service=>Access Token alındı:' +
-                sessionStorage.getItem('accessToken')
-            );
 
-            //check if accessToken expired from date time and navigate to error page
-            const accessTokenExpiredDateStr = sessionStorage.getItem(
-                'accessTokenExpiredDate'
-            );
 
-            if (sessionStorage.getItem('accessToken') != null) {
-                //check if accessToken expired from date time and navigate to error page
-                const refreshTokenExpiredDateStr = sessionStorage.getItem(
-                    'refreshTokenExpiredDate'
-                );
-
-                if (
-                    this.compareDates(
-                        refreshTokenExpiredDateStr?.toString() || '',
-                        Date.now()
-                    )
-                ) {
-                    console.log('tokenExpired çalıştı');
-                    this.messageService.add({
-                        severity: 'error',
-                        summary: 'Hata',
-                        detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
-                    });
-                    sessionStorage.removeItem('accessToken');
-                    sessionStorage.clear();
-                    //window.location.href =
-                        //'https://yetkiyonetimtest.csgb.gov.tr';
-                        this.router.navigate(['/']);
-                    //this.router.navigate(['/auth/login']);
-                    //this.router.navigateByUrl('https://yetkiyonetimtest.csgb.gov.tr');
-                }
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        console.log('Interceptor çalıştı');
+    
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            console.log('Access Token bulundu:', accessToken);
+    
+            // Token süresinin dolup dolmadığını kontrol et
+            const accessTokenExpiredDateStr = localStorage.getItem('accessTokenExpiredDate');
+            if (accessTokenExpiredDateStr && this.tokenExpired(accessTokenExpiredDateStr)) {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Hata',
+                    detail: 'Token süresi dolmuş, giriş yapmanız gerekiyor.',
+                });
+                this.router.navigate(['/auth/login']);
+                return next.handle(req.clone()); // Hangi istek yapıldığını bilmiyorum, orijinal isteği tekrar göndermeye gerek yok
             }
-
-            //Spinner componenti çalıştır.
-            this.loaderService.setLoading(true);
-            //console.log('intercept.service=>Access Token append edilmeye çalışılıyor=' +sessionStorage.getItem('accessToken'));
+    
+            // Token'ı header'a ekle
             const clonedReq = req.clone({
-                headers: req.headers
-                    .set(
-                        'AccessToken',
-                        'Bearer ' + sessionStorage.getItem('accessToken')
-                    )
-                    .set(
-                        'RefreshToken',
-                        'Bearer ' + sessionStorage.getItem('refreshToken')
-                    ),
+                headers: req.headers.set('Authorization', 'Bearer ' + accessToken)
             });
-
-            clonedReq.headers.append('content-type', 'application/json');
+    
             return next.handle(clonedReq).pipe(
                 tap({
-                    error: (error) => {
+                    next: (event) => {
+                        // Başarılı istek sonrası yapılacak işlemler
+                    },
+                    error: (error: HttpErrorResponse) => {
                         this.loaderService.setLoading(false);
-                        if (error.status == 401) {
+                        if (error.status === 401) {
                             this.messageService.add({
                                 severity: 'error',
                                 summary: 'Başarısız',
                                 detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
                             });
-                            sessionStorage.removeItem('accessToken');
-                            sessionStorage.clear();
-                            //    this.router.navigate(['/']);
-
-                            // this.router.navigate(['auth/login']);
-                            return next.handle(req.clone());
-                        } else if (error.status == 403) {
-                            this.messageService.add({
-                                severity: 'error',
-                                summary: 'Başarısız',
-                                detail: 'Yetkiniz olmadığı için sayfayı göremezsiniz',
-                            });
-                            return next.handle(req.clone());
-                        } else if (error.status == 400) {
-                            this.messageService.add({
-                                severity: 'error',
-                                summary: 'Başarısız',
-                                detail: 'Sunucuda bir hata meydana geldi',
-                            });
-                            return next.handle(req.clone());
-                        } else if (error.status == 500) {
-                            this.messageService.add({
-                                severity: 'error',
-                                summary: 'Başarısız',
-                                detail: 'Sunucuda bir hata meydana geldi',
-                            });
-                            return next.handle(req.clone());
+                            this.router.navigate(['/auth/login']);
                         } else {
-                            // this.router.navigate(['auth/error']);
-                            return next.handle(req.clone());
+                            // Diğer hata durumlarını ele al
+                            this.messageService.add({
+                                severity: 'error',
+                                summary: 'Başarısız',
+                                detail: 'Bir hata meydana geldi',
+                            });
                         }
                     },
                     finalize: () => {
-                        //console.log('intercept.service=>finalize çalıştı=' +sessionStorage.getItem('accessToken'));
                         this.loaderService.setLoading(false);
                     },
                 })
             );
         } else {
-            // this.router.navigateByUrl('/');
-
-            // this.router.navigateByUrl('/auth/login');
+            console.log('Access Token bulunamadı');
+            // Kullanıcı giriş yapmamışsa, istek gönder
             return next.handle(req.clone());
         }
     }
+    
+
+    // intercept(
+    //     req: HttpRequest<any>,
+    //     next: HttpHandler
+    // ): Observable<HttpEvent<any>> 
+    // {
+    //     console.log('intercept metodu çalıştı');
+    //     //console.log('intercept.serfvice=>Access Token alınmaya çalışılıyor=' +sessionStorage.getItem('accessToken'));
+    //     if (localStorage.getItem('accessToken') != null) {
+    //         console.log(
+    //             'intercept.service=>Access Token alındı:' +
+    //             localStorage.getItem('accessToken')
+    //         );
+
+    //         //check if accessToken expired from date time and navigate to error page
+    //         const accessTokenExpiredDateStr = localStorage.getItem(
+    //             'accessTokenExpiredDate'
+    //         );
+
+    //         /*if (sessionStorage.getItem('accessToken') != null) {
+    //             //check if accessToken expired from date time and navigate to error page
+    //             const refreshTokenExpiredDateStr = sessionStorage.getItem(
+    //                 'refreshTokenExpiredDate'
+    //             );
+
+    //             if (
+    //                 this.compareDates(
+    //                     refreshTokenExpiredDateStr?.toString() || '',
+    //                     Date.now()
+    //                 )
+    //             ) {
+    //                 console.log('tokenExpired çalıştı');
+    //                 this.messageService.add({
+    //                     severity: 'error',
+    //                     summary: 'Hata',
+    //                     detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
+    //                 });
+    //                 sessionStorage.removeItem('accessToken');
+    //                 sessionStorage.clear();
+    //                 //window.location.href =
+    //                     //'https://yetkiyonetimtest.csgb.gov.tr';
+    //                     this.router.navigate(['/']);
+    //                 //this.router.navigate(['/auth/login']);
+    //                 //this.router.navigateByUrl('https://yetkiyonetimtest.csgb.gov.tr');
+    //             }
+    //         }*/
+
+    //         //Spinner componenti çalıştır.
+    //         this.loaderService.setLoading(true);
+    //         //console.log('intercept.service=>Access Token append edilmeye çalışılıyor=' +sessionStorage.getItem('accessToken'));
+    //         const clonedReq = req.clone({
+    //             headers: req.headers
+    //                 .set(
+    //                     'AccessToken',
+    //                     'Bearer ' + localStorage.getItem('accessToken')
+    //                 )
+    //                 // .set(
+    //                 //     'RefreshToken',
+    //                 //     'Bearer ' + sessionStorage.getItem('refreshToken')
+    //                 // ),
+    //         });
+
+    //         clonedReq.headers.append('content-type', 'application/json');
+    //         return next.handle(clonedReq).pipe(
+    //             tap({
+    //                 error: (error) => {
+    //                     this.loaderService.setLoading(false);
+    //                     if (error.status == 401) {
+    //                         this.messageService.add({
+    //                             severity: 'error',
+    //                             summary: 'Başarısız',
+    //                             detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
+    //                         });
+    //                         //localStorage.removeItem('accessToken');
+    //                         //localStorage.clear();
+    //                         //    this.router.navigate(['/']);
+
+    //                         // this.router.navigate(['auth/login']);
+    //                         return next.handle(req.clone());
+    //                     } else if (error.status == 403) {
+    //                         this.messageService.add({
+    //                             severity: 'error',
+    //                             summary: 'Başarısız',
+    //                             detail: 'Yetkiniz olmadığı için sayfayı göremezsiniz',
+    //                         });
+    //                         return next.handle(req.clone());
+    //                     } else if (error.status == 400) {
+    //                         this.messageService.add({
+    //                             severity: 'error',
+    //                             summary: 'Başarısız',
+    //                             detail: 'Sunucuda bir hata meydana geldi',
+    //                         });
+    //                         return next.handle(req.clone());
+    //                     } else if (error.status == 500) {
+    //                         this.messageService.add({
+    //                             severity: 'error',
+    //                             summary: 'Başarısız',
+    //                             detail: 'Sunucuda bir hata meydana geldi',
+    //                         });
+    //                         return next.handle(req.clone());
+    //                     } else {
+    //                         // this.router.navigate(['auth/error']);
+    //                         return next.handle(req.clone());
+    //                     }
+    //                 },
+    //                 finalize: () => {
+    //                     //console.log('intercept.service=>finalize çalıştı=' +sessionStorage.getItem('accessToken'));
+    //                     this.loaderService.setLoading(false);
+    //                 },
+    //             })
+    //         );
+    //     } else {
+    //         // this.router.navigateByUrl('/');
+
+    //         // this.router.navigateByUrl('/auth/login');
+    //         return next.handle(req.clone());
+    //     }
+    // }
 }

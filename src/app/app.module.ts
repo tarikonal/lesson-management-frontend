@@ -18,6 +18,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 // My
 import { CustomSpinnerComponent } from './shared/layout/components/custom-spinner/custom-spinner.component';
 import { InterceptService } from './core/services/intercept.service';
+import { FormsModule } from '@angular/forms'; 
 
 @NgModule({
     declarations: [AppComponent, CustomSpinnerComponent],
@@ -28,6 +29,7 @@ import { InterceptService } from './core/services/intercept.service';
         ToastModule,
         ConfirmDialogModule,
         InputSwitchModule,
+        FormsModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

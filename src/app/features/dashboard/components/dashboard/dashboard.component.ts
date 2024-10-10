@@ -64,6 +64,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.subscription = this.layoutService.configUpdate$.subscribe(
             (config) => {
                 this.initCharts();
+                //refresh the page
+               
             }
         );
     }
@@ -79,7 +81,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     //     }
     // }
     ngOnInit() {
-    
+        if (!localStorage.getItem('pageReloaded')) {
+            localStorage.setItem('pageReloaded', 'true');
+            window.location.reload();
+        }
     // console.log("Dasboard çalıştı");
     //     let authCode;
     //     this.router.events.subscribe((val) => {

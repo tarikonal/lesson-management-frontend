@@ -35,10 +35,12 @@ export class AppMenuComponent implements OnInit {
     
     async ngOnInit(): Promise<void> {
         console.log('ngOnInit: Başladı');
-        await this.initiliazeTokens();
+        //await this.initiliazeTokens();
         console.log('ngOnInit: initiliazeTokens Tamamlandı');
        
-        await this.createLessonManagementMenu();
+        if (sessionStorage.getItem('accessToken')) {
+            await this.createLessonManagementMenu();
+        }
         //await this.setMenu();
        // console.log('ngOnInit: setMenu Tamamlandı');
     }
@@ -168,15 +170,15 @@ export class AppMenuComponent implements OnInit {
                     title: data.title,
                 };
     
-                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 
                 //sessionStorage.setItem('userName', userName);
-                sessionStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('accessToken', accessToken);
                 //sessionStorage.setItem('refreshToken', refreshToken);
                //sessionStorage.setItem('accessTokenExpiredDate', accessTokenExpiredDate);
                 //sessionStorage.setItem('refreshTokenExpiredDate', refreshTokenExpiredDate);
 
-                console.log( 'sessionStorage->userName =>'+sessionStorage.getItem('userName'));
+                console.log( 'sessionStorage->userName =>'+localStorage.getItem('userName'));
                 if(this.authData!=null){this.createLessonManagementMenu();}
                 
             },
@@ -188,7 +190,7 @@ export class AppMenuComponent implements OnInit {
                         summary: 'Hata',
                         detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
                     });
-                    sessionStorage.removeItem('accessToken');
+                    localStorage.removeItem('accessToken');
                     //sessionStorage.clear();
                     window.location.href = 'https://lessonManagement.tarikonal.com.tr';
                 } else {

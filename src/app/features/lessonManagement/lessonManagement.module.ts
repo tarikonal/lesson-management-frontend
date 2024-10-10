@@ -34,6 +34,8 @@ import { TeacherComponent } from './components/teacher/teacher.component';
 import { StudentComponent } from './components/student/student.component';
 import { LessonComponent } from './components/lesson/lesson.component';
 import { FamilyComponent } from './components/family/family.component';
+//import { Login2Module } from './components/login2/login2.module';
+//import { Login2Component } from './components/login2/login2.component';
 
 
 @NgModule({
@@ -43,7 +45,8 @@ import { FamilyComponent } from './components/family/family.component';
         LessonComponent,
         SessionComponent,
         AccountComponent,
-        FamilyComponent
+        FamilyComponent,
+        //Login2Component
     ],
     imports: [
         CommonModule,
@@ -73,6 +76,7 @@ import { FamilyComponent } from './components/family/family.component';
         SessionService,
         AccountService,
         FamilyService,
+     
     ], 
 })
 export class LessonManagementModule {}

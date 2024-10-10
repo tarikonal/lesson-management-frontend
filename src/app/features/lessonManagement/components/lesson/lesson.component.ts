@@ -45,7 +45,7 @@ export class LessonComponent implements OnInit {
     }
 
     getLessons() {
-        this.lessonService.getAll().subscribe(
+        this.lessonService.getAllAsync().subscribe(
             (data) => {
                 this.lessonList = data; //.body
             },
@@ -61,7 +61,7 @@ export class LessonComponent implements OnInit {
                         summary: 'Hata',
                         detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
                     });
-                    sessionStorage.clear();
+                   // sessionStorage.clear();
                     window.location.href =
                     'https://lessonManagement.tarikonal.com.tr';
                 } else {
@@ -73,7 +73,7 @@ export class LessonComponent implements OnInit {
     }
 
     ekle() {
-        this.lessonService.add(this.lessonSaveModel).subscribe({
+        this.lessonService.addAsync(this.lessonSaveModel).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
@@ -103,7 +103,7 @@ export class LessonComponent implements OnInit {
     }
 
     guncelle() {
-        this.lessonService.update(this.lessonUpdateModel).subscribe({
+        this.lessonService.updateAsync(this.lessonUpdateModel).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
@@ -135,7 +135,7 @@ export class LessonComponent implements OnInit {
             header: 'Silme İşlemi',
             icon: 'pi pi-info-circle',
             accept: () => {
-                this.lessonService.delete(id).subscribe({
+                this.lessonService.deleteAsync(id).subscribe({
                     next: () => {
                         this.messageService.add({
                             severity: 'success',

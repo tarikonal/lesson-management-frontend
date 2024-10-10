@@ -27,13 +27,14 @@ export class AppTopbarComponent {
     }
 
     get getCurrentUser() {
-        this.user = JSON.parse(<string>sessionStorage.getItem('currentUser'));
+        //this.user = JSON.parse(<string>sessionStorage.getItem('currentUser'));
+        //this.user = <string>sessionStorage.getItem('currentUser');
         //return (this.user.firstname + " " + this.user.lastname)
-        if (this.user === null) {
-            return '';
-        }
+        // if (this.user === null) {
+        //     return '';
+        // }
 
-        return this.user.name;
+        return localStorage.getItem('currentUser');;
     }
     
     get getTitle() {
@@ -42,9 +43,9 @@ export class AppTopbarComponent {
     }
 
     logout() {
-        sessionStorage.clear();
+        localStorage.clear();
         //this.router.navigate(['/auth/login']);
-        window.location.href = 'https://yetkiyonetimtest.csgb.gov.tr';
+        window.location.href = 'https://www.tarikonal.com.tr';
     }
 
     onMenuButtonClick() {
