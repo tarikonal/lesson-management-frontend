@@ -31,8 +31,8 @@
 <!--                                    <p-sortIcon field="id"></p-sortIcon>-->
                                 <th pSortableColumn="name" style="width:80%" class="white-space-nowrap">İsim
                                     <p-sortIcon field="name"></p-sortIcon>
-                                <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
-                                    <p-sortIcon field="ekleyen"></p-sortIcon>
+                                <!-- <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
+                                    <p-sortIcon field="ekleyen"></p-sortIcon> -->
 
                                 <th style="width:10%">Güncelle</th>
                                 <th style="width:10%">Sil</th>
@@ -43,7 +43,7 @@
                             <tr>
 <!--                                <td>{{ amaclar.id }}</td>-->
                                 <td>{{ teachers.name }}</td>
-                                <td>{{ teachers.ekleyen }}</td>
+                                <!-- <td>{{ teachers.ekleyen }}</td> -->
                                 <td>
                                     <button pButton class="p-button-warning w-auto" (click)="guncelleDialog(teachers)">
                                         Güncelle
@@ -76,7 +76,7 @@
 
                 <div class="field mb-1 col-12">
                     <label for="cloneName" class="font-medium text-900">İsim</label>
-                    <input id="cloneName" name="cloneName" type="text" pInputText [(ngModel)]="teacherUpdateForm.name" required>
+                    <input id="cloneName" name="cloneName" type="text" pInputText [(ngModel)]="teacherUpdateModel.name" required>
                 </div>
                 <span>diğerlerini de ekle</span>
                 <div class="field mb-4 col-12  flex justify-content-end flex-wrap">

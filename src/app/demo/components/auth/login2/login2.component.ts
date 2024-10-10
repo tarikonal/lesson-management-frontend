@@ -8,6 +8,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { DatePipe } from "@angular/common";
 import { Router } from '@angular/router';
 
+
 @Component({
 	templateUrl: './login2.component.html',
 	providers: [MessageService, ConfirmationService, DatePipe],
@@ -21,7 +22,8 @@ export class Login2Component  {
 		private layoutService: LayoutService,
 		private formBuilder: FormBuilder,
 		private router: Router,
-        private messageService: MessageService) 
+        private messageService: MessageService
+        ) 
 	{
 		this.loginDto = new LoginDto();
 	}
@@ -90,6 +92,8 @@ export class Login2Component  {
                     console.log(
                         'Unauthorized: Please provide valid credentials.'
                     );
+                    //alert('Unauthorized: Please provide valid credentials.');
+                    
                     this.messageService.add({
                         severity: 'error',
                         summary: 'Hata',
@@ -97,8 +101,8 @@ export class Login2Component  {
                     });
                     // sessionStorage.removeItem('accessToken');
                     // sessionStorage.clear();
-                    window.location.href =
-                        'https://www.tarikonal.com.tr';
+                    // window.location.href =
+                    //     'https://www.tarikonal.com.tr';
                 } else {
                     // Handle other error cases
                     console.error('An error occurred:', error);

@@ -21,7 +21,7 @@ export class FamilyComponent implements OnInit {
     familySaveModel =   new CreateFamilyDto();
     showGuncelleDialog: boolean = false;
     constructor(
-        private amacService: FamilyService,
+        private familyService: FamilyService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService
     ) {}
@@ -45,8 +45,8 @@ export class FamilyComponent implements OnInit {
     }
 
     getFamilies() {
-        var userName = localStorage.getItem('currentUser');
-        this.amacService.getAllAsync().subscribe(
+        //var userName = localStorage.getItem('currentUser');
+        this.familyService.getAllAsync().subscribe(
             (data) => {
                 this.familyList = data; //.body
             },
@@ -75,7 +75,7 @@ export class FamilyComponent implements OnInit {
     }
 
     ekle() {
-        this.amacService.addAsync(this.familySaveModel).subscribe({
+        this.familyService.addAsync(this.familySaveModel).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
@@ -99,13 +99,14 @@ export class FamilyComponent implements OnInit {
                         summary: 'Hata',
                         detail: err.message,
                     });
+                    console.error('An error occurred:', err);
                 } //else
             },
         });
     }
 
     guncelle() {
-        this.amacService.updateAsync(this.familyUpdateModel).subscribe({
+        this.familyService.updateAsync(this.familyUpdateModel).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
@@ -122,6 +123,7 @@ export class FamilyComponent implements OnInit {
                     summary: 'Hata',
                     detail: err.message,
                 });
+                console.error('An error occurred:', err);
             },
         });
         this.showGuncelleDialog = false;
@@ -139,7 +141,7 @@ export class FamilyComponent implements OnInit {
             header: 'Silme İşlemi',
             icon: 'pi pi-info-circle',
             accept: () => {
-                this.amacService.deleteAsync(id).subscribe({
+                this.familyService.deleteAsync(id).subscribe({
                     next: () => {
                         this.messageService.add({
                             severity: 'success',
@@ -154,6 +156,7 @@ export class FamilyComponent implements OnInit {
                             summary: 'Hata',
                             detail: err.message,
                         });
+                        console.error('An error occurred:', err);
                     },
                 });
             },

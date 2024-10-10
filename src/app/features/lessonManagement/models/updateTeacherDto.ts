@@ -14,5 +14,7 @@ export class UpdateTeacherDto {
     id?: any;
     name?: string | null;
     guncelleyenKullaniciId?: any | null;
+    ekleyenKullaniciId?: any | null;
+    eklemeTarihi?:any;
 }
 

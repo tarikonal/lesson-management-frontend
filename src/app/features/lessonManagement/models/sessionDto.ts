@@ -18,5 +18,8 @@ export class SessionDto {
     date?: string;
     durationInHours?: number;
     hourlyPrice?: number;
+    guncelleyenKullaniciId?: any | null;
+    ekleyenKullaniciId?: any | null;
+    eklemeTarihi?:any;
 }
 

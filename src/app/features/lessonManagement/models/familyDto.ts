@@ -16,5 +16,8 @@ export class FamilyDto {
     name?: string | null;
     members?: Array<StudentDto> | null;
     ekleyenKullaniciId?: any | null;
+    guncelleyenKullaniciId?: any | null;
+    
+    eklemeTarihi?:any;
 }
 

@@ -96,7 +96,7 @@ export class InterceptService implements HttpInterceptor {
                                 summary: 'Başarısız',
                                 detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
                             });
-                            this.router.navigate(['/auth/login']);
+                            //this.router.navigate(['/auth/login']);
                         } else {
                             // Diğer hata durumlarını ele al
                             this.messageService.add({

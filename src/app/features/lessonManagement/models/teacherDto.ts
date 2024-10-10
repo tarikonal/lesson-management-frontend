@@ -13,5 +13,8 @@
 export class TeacherDto { 
     id?: any;
     name?: string | null;
+    guncelleyenKullaniciId?: any | null;
+    ekleyenKullaniciId?: any | null;
+    eklemeTarihi?:any;
 }
 

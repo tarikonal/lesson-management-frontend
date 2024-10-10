@@ -12,7 +12,7 @@
 
 export class CreateStudentDto { 
     name?: string | null;
-    familyId?: string;
+    familyId?: any;
     ekleyenKullaniciId?: any | null;
 }
 

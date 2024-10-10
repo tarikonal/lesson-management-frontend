@@ -13,6 +13,22 @@
                         <label for="name" class="font-medium text-900">İsim</label>
                         <input id="name" name="name" type="text" pInputText [(ngModel)]="studentSaveModel.name" required>
                     </div>
+                    
+                    <div class="field mb-1 col-12">
+                        <label for="familyId" class="font-medium text-900">Aile</label>
+                        <p-dropdown 
+                            id="familyId" 
+                            name="familyId" 
+                            [options]="familyList" 
+                            optionLabel="name" 
+                            [(ngModel)]="studentSaveModel.familyId" 
+                            optionValue="id"
+                            placeholder="Aile Seçiniz" 
+                            [showClear]="true"
+                            required>
+                        </p-dropdown>
+                    </div>
+
                     <div class="field mb-4 col-12 flex justify-content-end flex-wrap">
                         <button id="btnKaydet" name="btnKaydet" pButton pRipple label="Kaydet" (click)="ekle()" class="w-auto mt-3" [disabled]="studentSaveForm.form.invalid"></button>
                     </div>
@@ -30,8 +46,10 @@
 <!--                                    <p-sortIcon field="id"></p-sortIcon>-->
                                 <th pSortableColumn="name" style="width:80%" class="white-space-nowrap">İsim
                                     <p-sortIcon field="name"></p-sortIcon>
-                                <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
-                                    <p-sortIcon field="ekleyen"></p-sortIcon>
+                                    <th pSortableColumn="familyName" style="width:80%" class="white-space-nowrap">Aile Soyadı
+                                        <p-sortIcon field="familyName"></p-sortIcon>
+                                <!-- <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
+                                    <p-sortIcon field="ekleyen"></p-sortIcon> -->
 
                                 <th style="width:10%">Güncelle</th>
                                 <th style="width:10%">Sil</th>
@@ -42,7 +60,8 @@
                             <tr>
 <!--                                <td>{{ amaclar.id }}</td>-->
                                 <td>{{ students.name }}</td>
-                                <td>{{ students.ekleyen }}</td>
+                                <td>{{ students.familyName }}</td>
+                                <!-- <td>{{ students.ekleyen }}</td> -->
                                 <td>
                                     <button pButton class="p-button-warning w-auto" (click)="guncelleDialog(students)">
                                         Güncelle

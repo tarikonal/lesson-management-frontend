@@ -14,5 +14,7 @@ export class UpdateFamilyDto {
     id?: any;
     name?: string | null;
     guncelleyenKullaniciId?: any | null;
+    ekleyenKullaniciId?: any | null;
+    eklemeTarihi?:any;
 }
 

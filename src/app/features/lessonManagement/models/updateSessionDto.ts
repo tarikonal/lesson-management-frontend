@@ -19,5 +19,7 @@ export class UpdateSessionDto {
     durationInHours?: number;
     hourlyPrice?: number;
     guncelleyenKullaniciId?: any | null;
+    ekleyenKullaniciId?: any | null;
+    eklemeTarihi?:any;
 }
 

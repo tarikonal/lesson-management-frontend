@@ -7,6 +7,7 @@ import {
 } from 'primeng/api';
 // My
 import { TeacherService } from '../../services/teacher.service';
+
 import { TeacherDto } from '../../models/teacherDto';
 import { UpdateTeacherDto } from '../../models/updateTeacherDto';
 import { CreateTeacherDto } from '../../models/createTeacherDto';
@@ -21,6 +22,7 @@ export class TeacherComponent implements OnInit {
     showGuncelleDialog: boolean = false;
     constructor(
         private teacherService: TeacherService,
+        
         private messageService: MessageService,
         private confirmationService: ConfirmationService
     ) {}
@@ -61,8 +63,8 @@ export class TeacherComponent implements OnInit {
                         detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
                     });
                     //sessionStorage.clear();
-                    window.location.href =
-                    'https://lessonManagement.tarikonal.com.tr';
+                    // window.location.href =
+                    // 'https://lessonManagement.tarikonal.com.tr';
                 } else {
                     // Handle other error cases
                     console.error('An error occurred:', error);
@@ -70,6 +72,8 @@ export class TeacherComponent implements OnInit {
             }
         );
     }
+
+    
 
     ekle() {
         this.teacherService.addAsync(this.teacherSaveModel).subscribe({
@@ -96,6 +100,7 @@ export class TeacherComponent implements OnInit {
                         summary: 'Hata',
                         detail: err.message,
                     });
+                    console.error('An error occurred:', err);
                 } //else
             },
         });
@@ -117,6 +122,7 @@ export class TeacherComponent implements OnInit {
                     summary: 'Hata',
                     detail: err.message,
                 });
+                console.error('An error occurred:', err);
             },
         });
         this.showGuncelleDialog = false;
@@ -149,6 +155,7 @@ export class TeacherComponent implements OnInit {
                             summary: 'Hata',
                             detail: err.message,
                         });
+                        console.error('An error occurred:', err);
                     },
                 });
             },

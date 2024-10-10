@@ -17,8 +17,12 @@ import { SessionDto } from './sessionDto';
 export class StudentDto { 
     id?: any;
     name?: string | null;
+    familyName?: string | null;
     familyId?: string;
-    family?: FamilyDto;
-    sessions?: Array<SessionDto> | null;
+    // family?: FamilyDto;
+    // sessions?: Array<SessionDto> | null;
+    guncelleyenKullaniciId?: any | null;
+    ekleyenKullaniciId?: any | null;
+    eklemeTarihi?:any;
 }
 

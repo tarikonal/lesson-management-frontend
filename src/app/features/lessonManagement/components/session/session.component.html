@@ -31,8 +31,8 @@
 <!--                                    <p-sortIcon field="id"></p-sortIcon>-->
                                 <th pSortableColumn="hourlyPrice" style="width:80%" class="white-space-nowrap">HourlyPrice
                                     <p-sortIcon field="hourlyPrice"></p-sortIcon>
-                                <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
-                                    <p-sortIcon field="ekleyen"></p-sortIcon>
+                                <!-- <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
+                                    <p-sortIcon field="ekleyen"></p-sortIcon> -->
 
                                 <th style="width:10%">Güncelle</th>
                                 <th style="width:10%">Sil</th>
@@ -43,7 +43,7 @@
                             <tr>
 <!--                                <td>{{ amaclar.id }}</td>-->
                                 <td>{{ sessions.name }}</td>
-                                <td>{{ sessions.ekleyen }}</td>
+                                <!-- <td>{{ sessions.ekleyen }}</td> -->
                                 <td>
                                     <button pButton class="p-button-warning w-auto" (click)="guncelleDialog(sessions)">
                                         Güncelle

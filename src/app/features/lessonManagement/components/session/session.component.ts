@@ -62,8 +62,9 @@ export class SessionComponent implements OnInit {
                         detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
                     });
                     //sessionStorage.clear();
-                    window.location.href =
-                    'https://lessonManagement.tarikonal.com.tr';
+                    // window.location.href =
+                    // 'https://lessonManagement.tarikonal.com.tr';
+                    
                 } else {
                     // Handle other error cases
                     console.error('An error occurred:', error);
@@ -73,7 +74,7 @@ export class SessionComponent implements OnInit {
     }
 
     ekle() {
-        this.sessionService.add(this.sessionSaveModel).subscribe({
+        this.sessionService.addAsync(this.sessionSaveModel).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
@@ -103,7 +104,7 @@ export class SessionComponent implements OnInit {
     }
 
     guncelle() {
-        this.sessionService.update(this.sessionUpdateModel).subscribe({
+        this.sessionService.updateAsync(this.sessionUpdateModel).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
@@ -135,7 +136,7 @@ export class SessionComponent implements OnInit {
             header: 'Silme İşlemi',
             icon: 'pi pi-info-circle',
             accept: () => {
-                this.sessionService.delete(id).subscribe({
+                this.sessionService.deleteAsync(id).subscribe({
                     next: () => {
                         this.messageService.add({
                             severity: 'success',

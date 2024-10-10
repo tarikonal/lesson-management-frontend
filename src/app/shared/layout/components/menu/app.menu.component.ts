@@ -38,7 +38,7 @@ export class AppMenuComponent implements OnInit {
         //await this.initiliazeTokens();
         console.log('ngOnInit: initiliazeTokens Tamamlandı');
        
-        if (sessionStorage.getItem('accessToken')) {
+        if (localStorage.getItem('accessToken')) {
             await this.createLessonManagementMenu();
         }
         //await this.setMenu();
@@ -192,7 +192,7 @@ export class AppMenuComponent implements OnInit {
                     });
                     localStorage.removeItem('accessToken');
                     //sessionStorage.clear();
-                    window.location.href = 'https://lessonManagement.tarikonal.com.tr';
+                    ///window.location.href = 'https://lessonManagement.tarikonal.com.tr';
                 } else {
                     console.error('app.menu.component=> getTokens => An error occurred:', error);
                 }

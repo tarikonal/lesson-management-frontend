@@ -6,22 +6,26 @@ import {
     MessageService,
 } from 'primeng/api';
 // My
+import { FamilyService } from '../../services/family.service';
 import { StudentService } from '../../services/student.service';
 import { StudentDto } from '../../models/studentDto';
 import { CreateStudentDto } from '../../models/createStudentDto';
 import { UpdateStudentDto } from '../../models/updateStudentDto';
+import { FamilyDto } from '../../models/familyDto';
 
 @Component({
     selector: 'app-student',
     templateUrl: './student.component.html',
 })
 export class StudentComponent implements OnInit {
+    familyList!: FamilyDto[];
     studentList!: StudentDto[];
     studentUpdateModel = new UpdateStudentDto();
     studentSaveModel = new CreateStudentDto();
     showGuncelleDialog: boolean = false;
     constructor(
         private studentService: StudentService,
+        private familyService: FamilyService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService
     ) {}
@@ -42,6 +46,37 @@ export class StudentComponent implements OnInit {
         //     ]
 
         this.getStudents();
+        this.getFamilies();
+    }
+
+    getFamilies() {
+        //var userName = localStorage.getItem('currentUser');
+        this.familyService.getAllAsync().subscribe(
+            (data) => {
+                this.familyList = data; //.body
+            },
+
+            (error) => {
+                console.log(error);
+                if (error.status === 401) {
+                    // Display error message for 401 status code
+                    console.log(
+                        'Unauthorized: Please provide valid credentials.'
+                    );
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Hata',
+                        detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
+                    });
+                   // sessionStorage.clear();
+                    window.location.href =
+                    'http://localhost:4200/#';
+                } else {
+                    // Handle other error cases
+                    console.error('An error occurred:', error);
+                }
+            }
+        );
     }
 
     getStudents() {
@@ -62,8 +97,8 @@ export class StudentComponent implements OnInit {
                         detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
                     });
                     //sessionStorage.clear();
-                    window.location.href =
-                        'https://lessonManagement.tarikonal.com.tr';
+                    // window.location.href =
+                    //     'https://lessonManagement.tarikonal.com.tr';
                 } else {
                     // Handle other error cases
                     console.error('An error occurred:', error);
@@ -73,7 +108,8 @@ export class StudentComponent implements OnInit {
     }
 
     ekle() {
-        this.studentService.add(this.studentSaveModel).subscribe({
+        console.log('FamilyID = '+JSON.stringify(this.studentSaveModel.familyId))
+        this.studentService.addAsync(this.studentSaveModel).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
@@ -97,13 +133,14 @@ export class StudentComponent implements OnInit {
                         summary: 'Hata',
                         detail: err.message,
                     });
+                    console.error('An error occurred:', err);
                 } //else
             },
         });
     }
 
     guncelle() {
-        this.studentService.update(this.studentUpdateModel).subscribe({
+        this.studentService.updateAsync(this.studentUpdateModel).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
@@ -118,6 +155,7 @@ export class StudentComponent implements OnInit {
                     summary: 'Hata',
                     detail: err.message,
                 });
+                console.error('An error occurred:', err);
             },
         });
         this.showGuncelleDialog = false;
@@ -135,7 +173,7 @@ export class StudentComponent implements OnInit {
             header: 'Silme İşlemi',
             icon: 'pi pi-info-circle',
             accept: () => {
-                this.studentService.delete(id).subscribe({
+                this.studentService.deleteAsync(id).subscribe({
                     next: () => {
                         this.messageService.add({
                             severity: 'success',
@@ -150,6 +188,7 @@ export class StudentComponent implements OnInit {
                             summary: 'Hata',
                             detail: err.message,
                         });
+                        console.error('An error occurred:', err);
                     },
                 });
             },

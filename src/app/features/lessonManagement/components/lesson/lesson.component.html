@@ -28,10 +28,10 @@
                             <tr>
 <!--                                <th pSortableColumn="id" style="width:80%" class="white-space-nowrap">ID-->
 <!--                                    <p-sortIcon field="id"></p-sortIcon>-->
-                                <th pSortableColumn="name" style="width:80%" class="white-space-nowrap">İsim
+                                <th pSortableColumn="name" style="width:80%" class="white-space-nowrap">Dersin Adı
                                     <p-sortIcon field="name"></p-sortIcon>
-                                <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
-                                    <p-sortIcon field="ekleyen"></p-sortIcon>
+                                <!-- <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
+                                    <p-sortIcon field="ekleyen"></p-sortIcon> -->
 
                                 <th style="width:10%">Güncelle</th>
                                 <th style="width:10%">Sil</th>
@@ -42,7 +42,7 @@
                             <tr>
 <!--                                <td>{{ amaclar.id }}</td>-->
                                 <td>{{ lessons.name }}</td>
-                                <td>{{ lessons.ekleyen }}</td>
+                                <!-- <td>{{ lessons.ekleyen }}</td> -->
                                 <td>
                                     <button pButton class="p-button-warning w-auto" (click)="guncelleDialog(lessons)">
                                         Güncelle

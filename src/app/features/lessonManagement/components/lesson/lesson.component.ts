@@ -45,6 +45,7 @@ export class LessonComponent implements OnInit {
     }
 
     getLessons() {
+        console.log('getLessons çalıştı');
         this.lessonService.getAllAsync().subscribe(
             (data) => {
                 this.lessonList = data; //.body
@@ -62,8 +63,8 @@ export class LessonComponent implements OnInit {
                         detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
                     });
                    // sessionStorage.clear();
-                    window.location.href =
-                    'https://lessonManagement.tarikonal.com.tr';
+                    // window.location.href =
+                    // 'https://lessonManagement.tarikonal.com.tr';
                 } else {
                     // Handle other error cases
                     console.error('An error occurred:', error);
@@ -118,6 +119,7 @@ export class LessonComponent implements OnInit {
                     summary: 'Hata',
                     detail: err.message,
                 });
+                console.error('An error occurred:', err);
             },
         });
         this.showGuncelleDialog = false;
