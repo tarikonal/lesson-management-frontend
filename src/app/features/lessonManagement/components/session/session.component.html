@@ -3,7 +3,8 @@
     <div class="grid">
         <div class="col-12 lg:col-2">
 
-            <p class="m-0 p-0 text-600 line-height-3 mr-3">Verilen Özel Ders Detaylarını buradan giriniz. Doğru hesaplama için dersin tarihini zaman aralığını doğru olarak girilmesi önemlidir</p>
+            <p class="m-0 p-0 text-600 line-height-3 mr-3">Verilen Özel Ders Detaylarını buradan giriniz. Doğru
+                hesaplama için dersin tarihini zaman aralığını doğru olarak girilmesi önemlidir</p>
         </div>
         <div class="col-12 lg:col-10">
 
@@ -11,11 +12,45 @@
                 <div class="grid formgrid p-fluid">
                     <div class="field mb-1 col-12">
                         <label for="hourlyPrice" class="font-medium text-900">Saatlik Ücret</label>
-                        <input id="hourlyPrice" name="hourlyPrice" type="text" pInputText [(ngModel)]="sessionSaveModel.hourlyPrice" required>
+                        <input id="hourlyPrice" name="hourlyPrice" type="text" pInputText
+                            [(ngModel)]="sessionSaveModel.hourlyPrice" required>
                     </div>
-                    <span>diğer alanları da ekle</span>
+                    <div class="field mb-1 col-12">
+                        <label for="durationInHours" class="font-medium text-900">Kaç Saat?</label>
+                        <input id="durationInHours" name="durationInHours" type="text" pInputText
+                            [(ngModel)]="sessionSaveModel.durationInHours" required>
+                    </div>
+                    <div class="field mb-1 col-12">
+                        <label for="date" class="font-medium text-900">Tarih</label>
+                        <p-calendar name="date" [(ngModel)]="sessionSaveModel.date" dateFormat="dd.mm.yy" required />
+                    </div>
+
+                    <div class="field mb-1 col-12">
+                        <label for="studentId" class="font-medium text-900">Öğrenci</label>
+                        <p-dropdown id="studentId" name="studentId" [options]="studentList" optionLabel="name"
+                            [(ngModel)]="sessionSaveModel.studentId" optionValue="id" placeholder="Öğrenci Seçiniz"
+                            [showClear]="true" required>
+                        </p-dropdown>
+                    </div>
+                    <div class="field mb-1 col-12">
+                        <label for="teacherId" class="font-medium text-900">Öğretmen</label>
+                        <p-dropdown id="teacherId" name="teacherId" [options]="teacherList" optionLabel="name"
+                            [(ngModel)]="sessionSaveModel.teacherId" optionValue="id" placeholder="Öğretmen Seçiniz"
+                            [showClear]="true" required>
+                        </p-dropdown>
+                    </div>
+                    <div class="field mb-1 col-12">
+                        <label for="lessonId" class="font-medium text-900">Ders</label>
+                        <p-dropdown id="lessonId" name="lessonId" [options]="lessonList" optionLabel="name"
+                            [(ngModel)]="sessionSaveModel.lessonId" optionValue="id" placeholder="Öğretmen Seçiniz"
+                            [showClear]="true" required>
+                        </p-dropdown>
+                    </div>
+
+              
                     <div class="field mb-4 col-12 flex justify-content-end flex-wrap">
-                        <button id="btnKaydet" name="btnKaydet" pButton pRipple label="Kaydet" (click)="ekle()" class="w-auto mt-3" [disabled]="sessionSaveForm.form.invalid"></button>
+                        <button id="btnKaydet" name="btnKaydet" pButton pRipple label="Kaydet" (click)="ekle()"
+                            class="w-auto mt-3" [disabled]="sessionSaveForm.form.invalid"></button>
                     </div>
 
 
@@ -27,11 +62,30 @@
                     <p-table responsiveLayout="scroll" #dt [value]="sessionList" [rows]="8" [paginator]="true">
                         <ng-template pTemplate="header">
                             <tr>
-<!--                                <th pSortableColumn="id" style="width:80%" class="white-space-nowrap">ID-->
-<!--                                    <p-sortIcon field="id"></p-sortIcon>-->
-                                <th pSortableColumn="hourlyPrice" style="width:80%" class="white-space-nowrap">HourlyPrice
+                                <!--                                <th pSortableColumn="id" style="width:80%" class="white-space-nowrap">ID-->
+                                <!--                                    <p-sortIcon field="id"></p-sortIcon>-->
+                                <th pSortableColumn="hourlyPrice" style="width:80%" class="white-space-nowrap">
+                                    HourlyPrice
                                     <p-sortIcon field="hourlyPrice"></p-sortIcon>
-                                <!-- <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
+                                <th pSortableColumn="teacherName" style="width:80%" class="white-space-nowrap">
+                                    Öğretmen
+                                    <p-sortIcon field="teacherName"></p-sortIcon>
+                                <th pSortableColumn="studentName" style="width:80%" class="white-space-nowrap">
+                                    Öğrenci
+                                    <p-sortIcon field="studentName"></p-sortIcon>
+                                <th pSortableColumn="lessonName" style="width:80%" class="white-space-nowrap">
+                                    Ders
+                                    <p-sortIcon field="lessonName"></p-sortIcon>
+                                <th pSortableColumn="date" style="width:80%" class="white-space-nowrap">
+                                    Tarih
+                                    <p-sortIcon field="date"></p-sortIcon>
+                                <th pSortableColumn="durationInHours" style="width:80%" class="white-space-nowrap">
+                                    Kaç Saat?
+                                    <p-sortIcon field="durationInHours"></p-sortIcon>
+                                <th pSortableColumn="rowSum" style="width:80%" class="white-space-nowrap">
+                                    Satır Toplamı
+                                    <p-sortIcon field="rowSum"></p-sortIcon>
+                                    <!-- <th pSortableColumn="ekleyen" style="width:80%" class="white-space-nowrap">Ekleyen
                                     <p-sortIcon field="ekleyen"></p-sortIcon> -->
 
                                 <th style="width:10%">Güncelle</th>
@@ -41,8 +95,14 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-sessions>
                             <tr>
-<!--                                <td>{{ amaclar.id }}</td>-->
-                                <td>{{ sessions.name }}</td>
+                                <!--                                <td>{{ amaclar.id }}</td>-->
+                                <td>{{ sessions.hourlyPrice }}</td>
+                                <td>{{ sessions.teacherName }}</td>
+                                <td>{{ sessions.studentName }}</td>
+                                <td>{{ sessions.lessonName }}</td>
+                                <td>{{ sessions.date | date:'dd.MM.yy'}}</td>
+                                <td>{{ sessions.durationInHours}}</td>
+                                <td>{{ sessions.durationInHours*sessions.hourlyPrice  | currency:'TRY':'symbol':'1.2-2'}}</td>
                                 <!-- <td>{{ sessions.ekleyen }}</td> -->
                                 <td>
                                     <button pButton class="p-button-warning w-auto" (click)="guncelleDialog(sessions)">
@@ -59,6 +119,10 @@
                         <ng-template pTemplate="summary">
                             <div class="flex align-items-center justify-content-between">
                                 Toplamda {{sessionList ? sessionList.length : 0 }} tane özel ders kaydı var.
+                              
+                            </div>
+                            <div class="flex align-items-center justify-content-between">
+                                Toplam Ücret: {{ getTotalPrice() | currency:'TRY':'symbol':'1.2-2' }}
                             </div>
                         </ng-template>
                     </p-table>
@@ -76,11 +140,49 @@
 
                 <div class="field mb-1 col-12">
                     <label for="cloneHourlyPrice" class="font-medium text-900">Açıklama</label>
-                    <input id="cloneHourlyPrice" name="cloneHourlyPrice" type="text" pInputText [(ngModel)]="sessionUpdateModel.hourlyPrice" required>
+                    <input id="cloneHourlyPrice" name="cloneHourlyPrice" type="text" pInputText
+                        [(ngModel)]="sessionUpdateModel.hourlyPrice" required>
                 </div>
-                <span>diğer alanları da ekle</span>
+                
+               
+    
+                    <div class="field mb-1 col-12">
+                        <label for="cloneDurationInHours" class="font-medium text-900">Kaç Saat?</label>
+                        <input id="cloneDurationInHours" name="cloneDurationInHours" type="text" pInputText
+                            [(ngModel)]="sessionUpdateModel.durationInHours" required>
+                    </div>
+                    <div class="field mb-1 col-12">
+                        <label for="cloneDate" class="font-medium text-900">Tarih</label>
+                        <p-calendar name="cloneDate" [(ngModel)]="sessionUpdateModel.date" dateFormat="dd.mm.yy" required />
+                    </div>
+
+                    <div class="field mb-1 col-12">
+                        <label for="cloneStudentId" class="font-medium text-900">Öğrenci</label>
+                        <p-dropdown id="cloneStudentId" name="cloneStudentId" [options]="studentList" optionLabel="name"
+                            [(ngModel)]="sessionUpdateModel.studentId" optionValue="id" placeholder="Öğrenci Seçiniz"
+                            [showClear]="true" required>
+                        </p-dropdown>
+                    </div>
+                    <div class="field mb-1 col-12">
+                        <label for="cloneTeacherId" class="font-medium text-900">Öğretmen</label>
+                        <p-dropdown id="cloneTeacherId" name="cloneTeacherId" [options]="teacherList" optionLabel="name"
+                            [(ngModel)]="sessionUpdateModel.teacherId" optionValue="id" placeholder="Öğretmen Seçiniz"
+                            [showClear]="true" required>
+                        </p-dropdown>
+                    </div>
+                    <div class="field mb-1 col-12">
+                        <label for="cloneLessonId" class="font-medium text-900">Ders</label>
+                        <p-dropdown id="cloneLessonId" name="cloneLessonId" [options]="lessonList" optionLabel="name"
+                            [(ngModel)]="sessionUpdateModel.lessonId" optionValue="id" placeholder="Öğretmen Seçiniz"
+                            [showClear]="true" required>
+                        </p-dropdown>
+                    </div>
+
+               
+
                 <div class="field mb-4 col-12  flex justify-content-end flex-wrap">
-                    <button pButton pRipple label="Kaydet" class="w-auto mt-3" (click)="guncelle()" [disabled]="sessionUpdateForm.invalid"></button>
+                    <button pButton pRipple label="Kaydet" class="w-auto mt-3" (click)="guncelle()"
+                        [disabled]="sessionUpdateForm.invalid"></button>
                 </div>
 
             </div>

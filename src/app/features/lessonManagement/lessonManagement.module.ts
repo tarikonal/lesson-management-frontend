@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 // Theme
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputMaskModule } from 'primeng/inputmask';
@@ -68,6 +69,7 @@ import { FamilyComponent } from './components/family/family.component';
         DataViewModule,
         InputTextareaModule,
         RippleModule,
+        CalendarModule
     ],
     providers: [ // Servisleri ekleyin.
         TeacherService,       

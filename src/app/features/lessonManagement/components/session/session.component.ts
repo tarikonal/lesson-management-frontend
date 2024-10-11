@@ -6,22 +6,35 @@ import {
     MessageService,
 } from 'primeng/api';
 // My
-import { SessionService } from '../../services/session.service';
+//import { CalendarModule } from 'primeng/calendar';
 import { SessionDto } from '../../models/sessionDto';
+import { StudentDto } from '../../models/studentDto';
+import { TeacherDto } from '../../models/teacherDto';
 import { UpdateSessionDto } from '../../models/updateSessionDto';
+import { LessonDto } from '../../models/lessonDto';
 import { CreateSessionDto } from '../../models/createSessionDto';
-
+import { StudentService } from '../../services/student.service';
+import { TeacherService } from '../../services/teacher.service';
+import { SessionService } from '../../services/session.service';
+import { LessonService } from '../../services/lesson.service';
 @Component({
     selector: 'app-session',
     templateUrl: './session.component.html',
 })
 export class SessionComponent implements OnInit {
     sessionList!: SessionDto[];
+    lessonList!: LessonDto[];
+    studentList!: StudentDto[];
+    teacherList!: TeacherDto[];
+    date?:string;
     sessionUpdateModel = new UpdateSessionDto();
     sessionSaveModel = new CreateSessionDto();
     showGuncelleDialog: boolean = false;
     constructor(
+        private teacherService: TeacherService,
         private sessionService: SessionService,
+        private studentService: StudentService,
+        private lessonService: LessonService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService
     ) {}
@@ -42,6 +55,101 @@ export class SessionComponent implements OnInit {
         //     ]
 
         this.getSessions();
+        this.getLessons();
+        this.getStudents();
+        this.getTeachers();
+    }
+  // Method to calculate total price
+  getTotalPrice(): number {
+    return this.sessionList.reduce((sum, session) => {
+      return sum + (session.durationInHours! * session.hourlyPrice!);
+    }, 0); // Start the sum from 0
+  }
+
+    getLessons() {
+      
+        this.lessonService.getAllAsync().subscribe(
+            (data) => {
+                this.lessonList = data; //.body
+            },
+
+            (error) => {
+                if (error.status === 401) {
+                    // Display error message for 401 status code
+                    console.log(
+                        'Unauthorized: Please provide valid credentials.'
+                    );
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Hata',
+                        detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
+                    });
+                   // sessionStorage.clear();
+                    // window.location.href =
+                    // 'https://lessonManagement.tarikonal.com.tr';
+                } else {
+                    // Handle other error cases
+                    console.error('An error occurred:', error);
+                }
+            }
+        );
+    }
+
+    getStudents() {
+        this.studentService.getAllAsync().subscribe(
+            (data) => {
+                this.studentList = data; //.body
+            },
+
+            (error) => {
+                if (error.status === 401) {
+                    // Display error message for 401 status code
+                    console.log(
+                        'Unauthorized: Please provide valid credentials.'
+                    );
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Hata',
+                        detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
+                    });
+                    //sessionStorage.clear();
+                    // window.location.href =
+                    //     'https://lessonManagement.tarikonal.com.tr';
+                } else {
+                    // Handle other error cases
+                    console.error('An error occurred:', error);
+                }
+            }
+        );
+    }
+
+
+    getTeachers() {
+        this.teacherService.getAllAsync().subscribe(
+            (data) => {
+                this.teacherList = data; //.body
+            },
+
+            (error) => {
+                if (error.status === 401) {
+                    // Display error message for 401 status code
+                    console.log(
+                        'Unauthorized: Please provide valid credentials.'
+                    );
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Hata',
+                        detail: 'Giriş Sayfasına Yönlendiriliyorsunuz',
+                    });
+                    //sessionStorage.clear();
+                    // window.location.href =
+                    // 'https://lessonManagement.tarikonal.com.tr';
+                } else {
+                    // Handle other error cases
+                    console.error('An error occurred:', error);
+                }
+            }
+        );
     }
 
     getSessions() {

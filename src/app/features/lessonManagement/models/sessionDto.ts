@@ -16,6 +16,9 @@ export class SessionDto {
     teacherId?: any;
     lessonId?: any;
     date?: string;
+    studentName?: string;
+    teacherName?: string;
+    lessonName?: string;
     durationInHours?: number;
     hourlyPrice?: number;
     guncelleyenKullaniciId?: any | null;
