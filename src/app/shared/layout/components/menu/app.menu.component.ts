@@ -140,7 +140,7 @@ export class AppMenuComponent implements OnInit {
     //                 });
     //                 sessionStorage.removeItem('accessToken');
     //                 //sessionStorage.clear();
-    //                 window.location.href = 'https://yetkiyonetimtest.csgb.gov.tr';
+    //                 window.location.href = 'https://aaa';
     //             } else {
     //                 console.error('app.menu.component=> getTokens => An error occurred:', error);
     //             }

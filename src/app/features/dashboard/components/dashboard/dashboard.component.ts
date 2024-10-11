@@ -185,7 +185,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     //                 sessionStorage.removeItem('accessToken');
     //                 sessionStorage.clear();
     //                 window.location.href =
-    //                     'https://yetkiyonetimtest.csgb.gov.tr';
+    //                     'https://aaa';
     //             } else {
     //                 // Handle other error cases
     //                 console.error('An error occurred:', error);

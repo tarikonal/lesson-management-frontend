@@ -158,10 +158,10 @@ export class InterceptService implements HttpInterceptor {
     //                 sessionStorage.removeItem('accessToken');
     //                 sessionStorage.clear();
     //                 //window.location.href =
-    //                     //'https://yetkiyonetimtest.csgb.gov.tr';
+    //                     //'https://aaaa';
     //                     this.router.navigate(['/']);
     //                 //this.router.navigate(['/auth/login']);
-    //                 //this.router.navigateByUrl('https://yetkiyonetimtest.csgb.gov.tr');
+    //                 //this.router.navigateByUrl('https://aaa');
     //             }
     //         }*/
 
