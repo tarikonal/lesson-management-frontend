@@ -19,6 +19,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RippleModule } from 'primeng/ripple';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { MessageService } from 'primeng/api';
 // My Modules
 import { LessonManagementRoutingModule } from './lessonManagement-routing.module';
 // My Services
@@ -78,7 +79,7 @@ import { FamilyComponent } from './components/family/family.component';
         SessionService,
         AccountService,
         FamilyService,
-     
+        MessageService
     ], 
 })
 export class LessonManagementModule {}
