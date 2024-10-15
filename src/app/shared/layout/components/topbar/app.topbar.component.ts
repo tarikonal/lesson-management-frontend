@@ -45,7 +45,8 @@ export class AppTopbarComponent {
     logout() {
         localStorage.clear();
         //this.router.navigate(['/auth/login']);
-        window.location.href = 'http://localhost:4200/login2';
+        //window.location.href = 'http://localhost:4200/login2';
+        window.location.href = 'https://ders.tarikonal.com.tr';
     }
 
     onMenuButtonClick() {
