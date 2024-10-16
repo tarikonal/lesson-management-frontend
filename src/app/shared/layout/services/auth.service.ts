@@ -15,11 +15,7 @@ export class AuthService extends ControllerDataService {
 
     // Auth Token bilgilerini getir. 
     async getTokens(options?: any): Promise<Observable<any>> {
-        // options = {
-        //     ...options,
-        //     Username: 'tarikonal',
-        //     Password: '06@Besiktas'
-        // };
+     
         return await this.post(this.getControllerName() + 'login', options);
     }
 }
